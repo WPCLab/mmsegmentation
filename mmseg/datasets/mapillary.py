@@ -24,7 +24,7 @@ class MapillaryDataset(CustomDataset):
                [128, 64, 0], [0, 192, 0], [128, 192, 0], [0, 64, 128],
                [128, 64, 128], [244, 35, 232]]
 
-    def __init__(self, split, **kwargs):
+    def __init__(self, **kwargs):
         super(MapillaryDataset, self).__init__(
             img_suffix='.jpg', seg_map_suffix='.png', **kwargs)
         assert osp.exists(self.img_dir)
