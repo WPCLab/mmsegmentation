@@ -2,12 +2,12 @@
 dataset_type = 'MapillaryDataset'
 data_root = '/nfs/volume-807-2/darrenwang/mapillary'
 img_norm_cfg = dict(
-    mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
+    mean=[106.43368245, 116.6170896, 119.55953205], std=[65.49699735, 67.60038525, 74.1233898], to_rgb=True)
 crop_size = (512, 512)
 train_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(type='LoadAnnotations', reduce_zero_label=True),
-    dict(type='Resize', min_size=1024, ratio_range=(0.5, 1.2)),
+    dict(type='Resize', min_size=1024, ratio_range=(0.5, 2)),
     dict(type='RandomCrop', crop_size=crop_size, cat_max_ratio=0.75),
     dict(type='RandomFlip', prob=0.5),
     dict(type='PhotoMetricDistortion'),

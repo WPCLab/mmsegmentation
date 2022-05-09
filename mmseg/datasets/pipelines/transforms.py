@@ -340,7 +340,7 @@ class RandomFlip(object):
         self.prob = prob
         self.direction = direction
         if prob is not None:
-            assert prob >= 0 and prob <= 1
+            assert 0 <= prob <= 1
         assert direction in ['horizontal', 'vertical']
 
     def __call__(self, results):
