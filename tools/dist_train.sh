@@ -14,4 +14,5 @@ python3 -m torch.distributed.launch \
     --master_port=$PORT \
     $(dirname "$0")/train.py \
     $CONFIG \
+    --auto-resume \
     --launcher pytorch ${@:3}

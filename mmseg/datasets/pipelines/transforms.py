@@ -248,20 +248,15 @@ class Resize(object):
         """Resize images with ``results['scale']``."""
         if self.keep_ratio:
             if self.min_size is not None:
-                # TODO: Now 'min_size' is an 'int' which means the minimum
+               # TODO: Now 'min_size' is an 'int' which means the minimum
                 # shape of images is (min_size, min_size, 3). 'min_size'
                 # with tuple type will be supported, i.e. the width and
                 # height are not equal.
-                if min(results['scale']) < self.min_size:
-                    new_short = self.min_size
-                else:
-                    new_short = min(results['scale'])
-
                 h, w = results['img'].shape[:2]
                 if h > w:
-                    new_h, new_w = new_short * h / w, new_short
+                    new_h, new_w = self.min_size * h / w, self.min_size
                 else:
-                    new_h, new_w = new_short, new_short * w / h
+                    new_h, new_w = self.min_size, self.min_size * w / h
                 results['scale'] = (new_h, new_w)
 
             img, scale_factor = mmcv.imrescale(
