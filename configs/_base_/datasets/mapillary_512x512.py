@@ -20,10 +20,10 @@ test_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(
         type='MultiScaleFlipAug',
-        # img_ratios=[0.5, 0.75, 1.0, 1.25, 1.5, 1.75],
+        img_ratios=[1.0],
         flip=False,
         transforms=[
-            dict(type='Resize', keep_ratio=True),
+            dict(type='Resize', max_size=2048, keep_ratio=True),
             dict(type='RandomFlip'),
             dict(type='Normalize', **img_norm_cfg),
             dict(type='ImageToTensor', keys=['img']),
@@ -36,18 +36,21 @@ data = dict(
     train=dict(
         type=dataset_type,
         data_root=data_root,
+        reduce_zero_label=True,
         img_dir='training/images',
         ann_dir='training/labels',
         pipeline=train_pipeline),
     val=dict(
         type=dataset_type,
         data_root=data_root,
+        reduce_zero_label=True,
         img_dir='validation/images',
         ann_dir='validation/labels',
         pipeline=test_pipeline),
     test=dict(
         type=dataset_type,
         data_root=data_root,
+        reduce_zero_label=True,
         img_dir='validation/images',
         ann_dir='validation/labels',
         pipeline=test_pipeline))

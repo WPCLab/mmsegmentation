@@ -9,7 +9,7 @@ if __name__ == '__main__':
     ann_dir = 'training/labels'
     pipeline = [dict(type='LoadImageFromFile'),
                 dict(type='LoadAnnotations'),
-                dict(type='Resize', min_size=1024, ratio_range=[1.0, 1.0])]
+                dict(type='Resize', min_size=1024, max_size=2048, ratio_range=[0.5, 2.0])]
     dataset = MapillaryDataset(pipeline=pipeline, data_root=data_root, img_dir=img_dir, ann_dir=ann_dir)
     palette = np.array(dataset.PALETTE)
     opacity = 0.5
