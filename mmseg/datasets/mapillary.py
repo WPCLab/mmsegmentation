@@ -13,11 +13,11 @@ class MapillaryDataset(CustomDataset):
         split (str): Split txt file for Mapillary
     """
 
-    CLASSES = ['Background', 'Car', 'Truck', 'Bus', 'Other Vehicle', 'MotorCyclist', 'Bicyclist', 'Pedestrian',
-               'Sign', 'Traffic Light', 'Pole', 'Construction Cone', 'Bicycle', 'MotorCycle', 'Building',
-               'Vegetation', 'Tree Trunk', 'Curb', 'Road', 'Lane Marker', 'Other Ground', 'Walkable', 'SideWalk']
+    CLASSES = ['Car', 'Truck', 'Bus', 'Other Vehicle', 'MotorCyclist', 'Bicyclist', 'Pedestrian', 'Sign',
+               'Traffic Light', 'Pole', 'Construction Cone', 'Bicycle', 'MotorCycle', 'Building', 'Vegetation',
+               'Tree Trunk', 'Curb', 'Road', 'Lane Marker', 'Other Ground', 'Walkable', 'SideWalk']
 
-    PALETTE = [[0, 0, 0], [128, 0, 0], [0, 128, 0], [128, 128, 0], [0, 0, 128],
+    PALETTE = [[128, 0, 0], [0, 128, 0], [128, 128, 0], [0, 0, 128],
                [128, 0, 128], [0, 128, 128], [128, 128, 128], [64, 0, 0],
                [192, 0, 0], [64, 128, 0], [192, 128, 0], [64, 0, 128],
                [192, 0, 128], [64, 128, 128], [0, 192, 0], [0, 64, 0],
