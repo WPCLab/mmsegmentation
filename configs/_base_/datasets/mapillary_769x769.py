@@ -3,7 +3,7 @@ dataset_type = 'MapillaryDataset'
 data_root = '/nfs/volume-807-2/darrenwang/mapillary'
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
-crop_size = (512, 1024)
+crop_size = (769, 769)
 train_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(type='LoadAnnotations'),
@@ -20,10 +20,10 @@ test_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(
         type='MultiScaleFlipAug',
-        img_ratios=[1.0],
+        img_ratios=[0.75, 1.0, 1.25],
         flip=False,
         transforms=[
-            dict(type='Resize', max_size=2048, keep_ratio=True),
+            dict(type='Resize', keep_ratio=True),
             dict(type='RandomFlip'),
             dict(type='Normalize', **img_norm_cfg),
             dict(type='ImageToTensor', keys=['img']),
