@@ -7,7 +7,7 @@ crop_size = (769, 769)
 train_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(type='LoadAnnotations'),
-    dict(type='Resize', min_size=1024, max_size=2048, ratio_range=(0.5, 2)),
+    dict(type='Resize', min_size=1025, max_size=2049, ratio_range=(0.5, 2)),
     dict(type='RandomCrop', crop_size=crop_size, cat_max_ratio=0.75),
     dict(type='RandomFlip', prob=0.5),
     dict(type='PhotoMetricDistortion'),
@@ -23,7 +23,7 @@ test_pipeline = [
         img_ratios=[1.0],
         flip=False,
         transforms=[
-            dict(type='Resize', min_size=1024, max_size=2048, keep_ratio=True),
+            dict(type='Resize', min_size=1025, max_size=2049, keep_ratio=True),
             dict(type='RandomFlip'),
             dict(type='Normalize', **img_norm_cfg),
             dict(type='ImageToTensor', keys=['img']),

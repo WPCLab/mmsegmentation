@@ -9,5 +9,6 @@ model = dict(
         align_corners=True,
         num_classes=66),
     auxiliary_head=dict(
+        sampler=dict(type='OHEMPixelSampler', min_kept=100000),
         align_corners=True,
         num_classes=66))
