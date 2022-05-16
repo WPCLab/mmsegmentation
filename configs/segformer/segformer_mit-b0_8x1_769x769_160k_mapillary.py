@@ -1,17 +1,11 @@
 _base_ = [
-    '../_base_/models/segformer_mit-b0.py',
-    '../_base_/datasets/mapillary_769x769.py',
+    '../_base_/models/segformer_mit-b0.py', '../_base_/datasets/mapillary_769x769.py',
     '../_base_/default_runtime.py', '../_base_/schedules/schedule_160k.py'
 ]
 
 model = dict(
-    backbone=dict(
-        init_cfg=dict(type='Pretrained', checkpoint='pretrain/mit_b0.pth')),
+    pretrained='/nfs/volume-807-2/darrenwang/pretrain/mmit_b0.pth',
     decode_head=dict(
-        sampler=dict(type='OHEMPixelSampler', min_kept=100000),
-        align_corners=True,
-        num_classes=66),
-    auxiliary_head=dict(
         sampler=dict(type='OHEMPixelSampler', min_kept=100000),
         align_corners=True,
         num_classes=66))
