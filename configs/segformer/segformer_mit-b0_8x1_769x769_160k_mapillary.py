@@ -35,3 +35,5 @@ lr_config = dict(
     by_epoch=False)
 
 data = dict(samples_per_gpu=1, workers_per_gpu=1)
+
+checkpoint_config = dict(interval=2000)
