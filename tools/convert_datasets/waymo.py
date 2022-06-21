@@ -61,10 +61,7 @@ class WaymoParser(object):
                 frame = open_dataset.Frame()
                 frame.ParseFromString(bytearray(data.numpy()))
                 file_id = self.get_file_id(frame)
-
-                if frame.images[0].camera_segmentation_label.panoptic_label:
-                    self.save_image(frame, file_id, frame_idx)
-                    self.save_label(frame, file_id, frame_idx)
+                self.save_image_and_label(frame, file_id, frame_idx)
 
         except Exception as e:
             print('Failed to parse: %s, error msg: %s' % (pathname, str(e)))
@@ -82,22 +79,34 @@ class WaymoParser(object):
             file_id (str): Current file id.
             frame_idx (int): Current frame index.
         """
-        for img in frame.images:
-            img = tf.image.decode_jpeg(img.image)
+        for image_info in frame.images:
+            if not image_info.camera_segmentation_label.panoptic_label:
+                continue
+
+            # image
+            img = tf.image.decode_jpeg(image_info.image)
             img = img.numpy()[...,::-1]
 
-            img_path = f'{self.image_save_dir}/{str(img.name - 1)} + {file_id}' + \
+            img_path = f'{self.image_save_dir}/{str(image_info.name - 1)}' + f'{file_id}' + \
                        f'{str(frame_idx).zfill(3)}.png'
-            cv2.imwrite(img_path, img.numpy())
+            cv2.imwrite(img_path, img)
 
-            panoptic_label = camera_segmentation_utils.decode_single_panoptic_label_from_proto(image.camera_segmentation_label)
+            # label
+            label_info = image_info.camera_segmentation_label
+            panoptic_label = camera_segmentation_utils.decode_single_panoptic_label_from_proto(label_info)
             semantic_label, _ = camera_segmentation_utils.decode_semantic_and_instance_labels_from_panoptic_label(
                 panoptic_label,
-                panoptic_label.panoptic_label_divisor
+                label_info.panoptic_label_divisor
             )
 
-            label_path = f'{self.label_save_dir}/{str(img.name - 1)} + {file_id}' + \
+            label_path = f'{self.label_save_dir}/{str(image_info.name - 1)}' + f'{file_id}' + \
                          f'{str(frame_idx).zfill(3)}.png'
+            semantic_label = semantic_label.astype(np.uint8)[:, :, 0]
+
+            # convert unlabeled to ignored label (0 to 255)
+            semantic_label -= 1
+            semantic_label[semantic_label == -1] = 255
+
             semantic_label = Image.fromarray(semantic_label)
             semantic_label.save(label_path)
 
