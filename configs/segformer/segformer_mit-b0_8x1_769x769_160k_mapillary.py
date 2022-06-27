@@ -4,7 +4,7 @@ _base_ = [
 ]
 
 model = dict(
-    pretrained='/nfs/volume-807-2/darrenwang/pretrain/mmit_b0.pth',
+    pretrained='/nfs/volume-807-2/darrenwang/pretrain/mit_b0_pretrained.pth',
     decode_head=dict(
         sampler=dict(type='OHEMPixelSampler', min_kept=100000),
         align_corners=True,

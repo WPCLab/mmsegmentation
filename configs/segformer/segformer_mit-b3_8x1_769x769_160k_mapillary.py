@@ -1,7 +1,7 @@
 _base_ = ['./segformer_mit-b0_8x1_769x769_160k_mapillary.py']
 
 model = dict(
-    pretrained='/nfs/volume-807-2/darrenwang/pretrain/mmit_b3.pth',
+    pretrained='/nfs/volume-807-2/darrenwang/pretrain/mit_b3_pretrained.pth',
     backbone=dict(
         embed_dims=64,
         num_layers=[3, 4, 18, 3]),
