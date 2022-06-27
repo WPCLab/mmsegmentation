@@ -1,4 +1,4 @@
-_base_ = ['./segformer_mit-b0_8x1_769x769_160k_mapillary.py']
+_base_ = ['./segformer_mit-b0_8x1_769x769_160k_waymo.py']
 
 model = dict(
     pretrained='/nfs/volume-807-2/darrenwang/mmseg_pretrained_models/mit_b3_pretrained.pth',
