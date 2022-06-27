@@ -8,7 +8,7 @@ model = dict(
     decode_head=dict(
         sampler=dict(type='OHEMPixelSampler', min_kept=100000),
         align_corners=True,
-        num_classes=66))
+        num_classes=28))
 
 # optimizer
 optimizer = dict(
