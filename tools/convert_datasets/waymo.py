@@ -85,7 +85,7 @@ class WaymoParser(object):
 
             # image
             img = tf.image.decode_jpeg(image_info.image)
-            img = img.numpy()[...,::-1]
+            img = img.numpy()[..., ::-1]
 
             img_path = f'{self.image_save_dir}/{str(image_info.name - 1)}' + f'{file_id}' + \
                        f'{str(frame_idx).zfill(3)}.png'
@@ -99,14 +99,13 @@ class WaymoParser(object):
                 label_info.panoptic_label_divisor
             )
 
-            label_path = f'{self.label_save_dir}/{str(image_info.name - 1)}' + f'{file_id}' + \
-                         f'{str(frame_idx).zfill(3)}.png'
-            semantic_label = semantic_label.astype(np.uint8)[:, :, 0]
-
             # convert unlabeled to ignored label (0 to 255)
+            semantic_label = semantic_label.astype(np.uint8)[:, :, 0]
             semantic_label -= 1
             semantic_label[semantic_label == -1] = 255
 
+            label_path = f'{self.label_save_dir}/{str(image_info.name - 1)}' + f'{file_id}' + \
+                         f'{str(frame_idx).zfill(3)}.png'
             semantic_label = Image.fromarray(semantic_label)
             semantic_label.save(label_path)
 
