@@ -6,7 +6,6 @@ _base_ = [
 model = dict(
     pretrained='/nfs/volume-807-2/darrenwang/mmseg_pretrained_models/mit_b0_pretrained.pth',
     decode_head=dict(
-        sampler=dict(type='OHEMPixelSampler', min_kept=100000),
         align_corners=True,
         num_classes=28,
         loss_decode=dict(
@@ -47,6 +46,6 @@ lr_config = dict(
     min_lr=0.0,
     by_epoch=False)
 
-data = dict(samples_per_gpu=1, workers_per_gpu=1)
+data = dict(samples_per_gpu=2, workers_per_gpu=2)
 
 checkpoint_config = dict(interval=2000)
