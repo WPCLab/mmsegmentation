@@ -61,6 +61,8 @@ class SegformerHead(BaseDecodeHead):
 
         out = self.fusion_conv(torch.cat(outs, dim=1))
 
-        out = self.cls_seg(out)
+        # for extract feature
+        if False:
+            out = self.cls_seg(out)
 
         return out
