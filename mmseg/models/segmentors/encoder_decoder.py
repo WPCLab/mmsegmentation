@@ -165,7 +165,7 @@ class EncoderDecoder(BaseSegmentor):
         h_grids = max(h_img - h_crop + h_stride - 1, 0) // h_stride + 1
         w_grids = max(w_img - w_crop + w_stride - 1, 0) // w_stride + 1
         # for extract feature
-        if False:
+        if True:
             num_classes = self.num_classes
         else:
             num_classes = 256
@@ -244,7 +244,7 @@ class EncoderDecoder(BaseSegmentor):
         else:
             seg_logit = self.whole_inference(img, img_meta, rescale)
         # for extract feature
-        if False:
+        if True:
             output = F.softmax(seg_logit, dim=1)
         else:
             output = seg_logit
@@ -265,7 +265,8 @@ class EncoderDecoder(BaseSegmentor):
         # for extract feature
         if False:
             seg_pred = seg_logit.argmax(dim=1)
-        seg_pred = seg_logit
+        else:
+            seg_pred = seg_logit
         if torch.onnx.is_in_onnx_export():
             # our inference backend only support 4D output
             seg_pred = seg_pred.unsqueeze(0)
@@ -291,7 +292,8 @@ class EncoderDecoder(BaseSegmentor):
         # for extract feature
         if False:
             seg_pred = seg_logit.argmax(dim=1)
-        seg_pred = seg_logit
+        else:
+            seg_pred = seg_logit
         seg_pred = seg_pred.cpu().numpy()
         # unravel batch dim
         seg_pred = list(seg_pred)
