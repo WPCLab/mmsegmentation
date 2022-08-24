@@ -162,9 +162,13 @@ class EncoderDecoder(BaseSegmentor):
         h_stride, w_stride = self.test_cfg.stride
         h_crop, w_crop = self.test_cfg.crop_size
         batch_size, _, h_img, w_img = img.size()
-        num_classes = self.num_classes
         h_grids = max(h_img - h_crop + h_stride - 1, 0) // h_stride + 1
         w_grids = max(w_img - w_crop + w_stride - 1, 0) // w_stride + 1
+        # for extract feature
+        if False:
+            num_classes = self.num_classes
+        else:
+            num_classes = 256
         preds = img.new_zeros((batch_size, num_classes, h_img, w_img))
         count_mat = img.new_zeros((batch_size, 1, h_img, w_img))
         for h_idx in range(h_grids):
@@ -239,7 +243,11 @@ class EncoderDecoder(BaseSegmentor):
             seg_logit = self.slide_inference(img, img_meta, rescale)
         else:
             seg_logit = self.whole_inference(img, img_meta, rescale)
-        output = F.softmax(seg_logit, dim=1)
+        # for extract feature
+        if False:
+            output = F.softmax(seg_logit, dim=1)
+        else:
+            output = seg_logit
         flip = img_meta[0]['flip']
         if flip:
             flip_direction = img_meta[0]['flip_direction']
@@ -254,7 +262,10 @@ class EncoderDecoder(BaseSegmentor):
     def simple_test(self, img, img_meta, rescale=True):
         """Simple test with single image."""
         seg_logit = self.inference(img, img_meta, rescale)
-        seg_pred = seg_logit.argmax(dim=1)
+        # for extract feature
+        if False:
+            seg_pred = seg_logit.argmax(dim=1)
+        seg_pred = seg_logit
         if torch.onnx.is_in_onnx_export():
             # our inference backend only support 4D output
             seg_pred = seg_pred.unsqueeze(0)
@@ -277,7 +288,10 @@ class EncoderDecoder(BaseSegmentor):
             cur_seg_logit = self.inference(imgs[i], img_metas[i], rescale)
             seg_logit += cur_seg_logit
         seg_logit /= len(imgs)
-        seg_pred = seg_logit.argmax(dim=1)
+        # for extract feature
+        if False:
+            seg_pred = seg_logit.argmax(dim=1)
+        seg_pred = seg_logit
         seg_pred = seg_pred.cpu().numpy()
         # unravel batch dim
         seg_pred = list(seg_pred)

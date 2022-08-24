@@ -111,7 +111,8 @@ class Resize(object):
                  multiscale_mode='range',
                  ratio_range=None,
                  keep_ratio=True,
-                 min_size=None):
+                 min_size=None,
+                 max_size=None):
         if img_scale is None:
             self.img_scale = None
         else:
@@ -133,6 +134,7 @@ class Resize(object):
         self.ratio_range = ratio_range
         self.keep_ratio = keep_ratio
         self.min_size = min_size
+        self.max_size = max_size
 
     @staticmethod
     def random_select(img_scales):
@@ -264,6 +266,19 @@ class Resize(object):
                     new_h, new_w = new_short, new_short * w / h
                 results['scale'] = (new_h, new_w)
 
+            if self.max_size is not None:
+                if max(results['scale']) > self.max_size:
+                    new_long = self.max_size
+                else:
+                    new_long = max(results['scale'])
+
+                h, w = results['img'].shape[:2]
+                if h > w:
+                    new_h, new_w = new_long, new_long * w / h
+                else:
+                    new_h, new_w = new_long * h / w, new_long
+                results['scale'] = (new_h, new_w)
+
             img, scale_factor = mmcv.imrescale(
                 results['img'], results['scale'], return_scale=True)
             # the w_scale and h_scale has minor difference
@@ -340,7 +355,7 @@ class RandomFlip(object):
         self.prob = prob
         self.direction = direction
         if prob is not None:
-            assert prob >= 0 and prob <= 1
+            assert 0 <= prob <= 1
         assert direction in ['horizontal', 'vertical']
 
     def __call__(self, results):

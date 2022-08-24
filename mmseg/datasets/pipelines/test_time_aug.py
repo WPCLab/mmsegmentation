@@ -53,7 +53,7 @@ class MultiScaleFlipAug(object):
 
     def __init__(self,
                  transforms,
-                 img_scale,
+                 img_scale=None,
                  img_ratios=None,
                  flip=False,
                  flip_direction='horizontal'):
