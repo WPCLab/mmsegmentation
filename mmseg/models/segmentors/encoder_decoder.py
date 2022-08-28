@@ -244,7 +244,10 @@ class EncoderDecoder(BaseSegmentor):
         else:
             seg_logit = self.whole_inference(img, img_meta, rescale)
         # for extract feature
-        output = F.softmax(seg_logit, dim=1)
+        if False:
+            output = seg_logit
+        else:
+            output = F.softmax(seg_logit, dim=1)
         flip = img_meta[0]['flip']
         if flip:
             flip_direction = img_meta[0]['flip_direction']
