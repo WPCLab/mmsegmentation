@@ -100,7 +100,7 @@ class WaymoParser(object):
             )
 
             # convert unlabeled to ignored label (0 to 255)
-            semantic_label = semantic_label.astype(np.uint8)[:, :, 0]
+            semantic_label = semantic_label.astype(np.int32)[:, :, 0]
             semantic_label -= 1
             semantic_label[semantic_label == -1] = 255
 
