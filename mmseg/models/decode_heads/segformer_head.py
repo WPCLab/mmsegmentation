@@ -42,8 +42,20 @@ class SegformerHead(BaseDecodeHead):
         self.fusion_conv = ConvModule(
             in_channels=self.channels * num_inputs,
             out_channels=self.channels,
+            kernel_size=3,
+            padding=1,
+            norm_cfg=self.norm_cfg,
+            act_cfg=self.act_cfg)
+
+        self.bottleneck = ConvModule(
+            in_channels=self.channels,
+            out_channels=64,
             kernel_size=1,
             norm_cfg=self.norm_cfg)
+
+        self.conv_seg = nn.Conv2d(64, self.num_classes, kernel_size=1)
+
+        self.return_feature = False
 
     def forward(self, inputs):
         # Receive 4 stage backbone feature map: 1/4, 1/8, 1/16, 1/32
@@ -61,8 +73,10 @@ class SegformerHead(BaseDecodeHead):
 
         out = self.fusion_conv(torch.cat(outs, dim=1))
 
+        out = self.bottleneck(out)
+
         # for extract feature
-        if True:
+        if not self.return_feature:
             out = self.cls_seg(out)
 
         return out
