@@ -1,7 +1,7 @@
 _base_ = ['./segformer_mit-b0_8x1_769x769_160k_waymo.py']
 
 model = dict(
-    pretrained='/nfs/volume-807-2/darrenwang/mmseg_pretrained_models/mit_b5_pretrained.pth',
+    pretrained='/nfs/volume-807-2/darrenwang/mmseg_pretrained_models/mit_b4_pretrained.pth',
     backbone=dict(
         embed_dims=64,
         num_layers=[3, 8, 27, 3]),
