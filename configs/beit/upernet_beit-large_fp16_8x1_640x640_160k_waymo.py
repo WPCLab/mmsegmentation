@@ -1,5 +1,5 @@
 _base_ = [
-    '../_base_/models/upernet_beit.py', '../_base_/datasets/waymo_896x896.py',
+    '../_base_/models/upernet_beit.py', '../_base_/datasets/waymo_640x640.py',
     '../_base_/default_runtime.py', '../_base_/schedules/schedule_320k.py'
 ]
 
