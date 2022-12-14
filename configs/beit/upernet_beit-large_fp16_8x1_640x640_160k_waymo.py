@@ -4,7 +4,7 @@ _base_ = [
 ]
 
 model = dict(
-    pretrained='pretrain/beit_large_patch16_224_pt22k_ft22k.pth',
+    pretrained='/nfs/dataset-dtai-common/pretrained_models/beit_large_patch16_224_pt22k_ft22k.pth',
     backbone=dict(
         type='BEiT',
         embed_dims=1024,
